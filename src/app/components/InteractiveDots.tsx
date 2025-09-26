@@ -3,10 +3,26 @@
 import { useEffect } from "react";
 import "../interactive-dots.css";
 
+interface GSAPInstance {
+  timeline: () => GSAPTimeline;
+  to: (...args: unknown[]) => void;
+  set: (...args: unknown[]) => void;
+  registerPlugin: (...args: unknown[]) => void;
+  utils: {
+    random: (...args: unknown[]) => unknown;
+    interpolate: (...args: unknown[]) => unknown;
+  };
+}
+
+interface GSAPTimeline {
+  to: (...args: unknown[]) => GSAPTimeline;
+  set: (...args: unknown[]) => GSAPTimeline;
+}
+
 declare global {
   interface Window {
-    gsap: any;
-    InertiaPlugin: any;
+    gsap: GSAPInstance;
+    InertiaPlugin: unknown;
   }
 }
 
@@ -83,13 +99,13 @@ export default function InteractiveDots() {
 
             if (isHole) {
               d.style.visibility = "hidden";
-              // @ts-ignore
+              // @ts-expect-error GSAP library methods not fully typed GSAP library methods not fully typed GSAP library methods not fully typed
               d._isHole = true;
             } else {
               // Initialize position/color even without GSAP
               d.style.transform = "translate(0, 0)";
               d.style.backgroundColor = colors.base;
-              // @ts-ignore
+              // @ts-expect-error GSAP library methods not fully typed GSAP library methods not fully typed GSAP library methods not fully typed
               d._inertiaApplied = false;
             }
 
@@ -99,7 +115,7 @@ export default function InteractiveDots() {
 
           requestAnimationFrame(() => {
             dotCenters = dots
-              // @ts-ignore
+              // @ts-expect-error GSAP library methods not fully typed GSAP library methods not fully typed GSAP library methods not fully typed
               .filter((d) => !d._isHole)
               .map((d) => {
                 const r = d.getBoundingClientRect();
@@ -122,8 +138,8 @@ export default function InteractiveDots() {
         window.addEventListener("mousemove", (e) => {
           const now = performance.now();
           const dt = now - lastTime || 16;
-          let dx = e.pageX - lastX;
-          let dy = e.pageY - lastY;
+          const dx = e.pageX - lastX;
+          const dy = e.pageY - lastY;
           let vx = (dx / dt) * 1000;
           let vy = (dy / dt) * 1000;
           let speed = Math.hypot(vx, vy);
@@ -149,9 +165,9 @@ export default function InteractiveDots() {
               }
 
               // Only apply inertia if plugin is available
-              // @ts-ignore
+              // @ts-expect-error GSAP library methods not fully typed GSAP library methods not fully typed GSAP library methods not fully typed
               if (hasGsap && window.InertiaPlugin && speed > speedThreshold && dist < threshold && !el._inertiaApplied) {
-                // @ts-ignore
+                // @ts-expect-error GSAP library methods not fully typed GSAP library methods not fully typed GSAP library methods not fully typed
                 el._inertiaApplied = true;
                 const pushX = x - e.pageX + vx * 0.005;
                 const pushY = y - e.pageY + vy * 0.005;
@@ -165,7 +181,7 @@ export default function InteractiveDots() {
                       duration: 1.5,
                       ease: "elastic.out(1,0.75)",
                     });
-                    // @ts-ignore
+                    // @ts-expect-error GSAP library methods not fully typed GSAP library methods not fully typed GSAP library methods not fully typed
                     el._inertiaApplied = false;
                   },
                 });
@@ -179,9 +195,9 @@ export default function InteractiveDots() {
           if (!(hasGsap && window.InertiaPlugin)) return;
           dotCenters.forEach(({ el, x, y }) => {
             const dist = Math.hypot(x - e.pageX, y - e.pageY);
-            // @ts-ignore
+            // @ts-expect-error GSAP library methods not fully typed GSAP library methods not fully typed GSAP library methods not fully typed
             if (dist < shockRadius && !el._inertiaApplied) {
-              // @ts-ignore
+              // @ts-expect-error GSAP library methods not fully typed GSAP library methods not fully typed GSAP library methods not fully typed
               el._inertiaApplied = true;
               const falloff = Math.max(0, 1 - dist / shockRadius);
               const pushX = (x - e.pageX) * shockPower * falloff;
@@ -196,7 +212,7 @@ export default function InteractiveDots() {
                     duration: 1.5,
                     ease: "elastic.out(1,0.75)",
                   });
-                  // @ts-ignore
+                  // @ts-expect-error GSAP library methods not fully typed GSAP library methods not fully typed GSAP library methods not fully typed
                   el._inertiaApplied = false;
                 },
               });

@@ -3,13 +3,14 @@ import "../../product-details.css";
 import "../../center-navbar.css";
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function ProductPage({ params }: ProductPageProps) {
-  const productId = parseInt(params.id);
+export default async function ProductPage({ params }: ProductPageProps) {
+  const resolvedParams = await params;
+  const productId = parseInt(resolvedParams.id);
 
   if (isNaN(productId)) {
     return (
@@ -29,7 +30,8 @@ export default function ProductPage({ params }: ProductPageProps) {
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: ProductPageProps) {
-  const productId = parseInt(params.id);
+  const resolvedParams = await params;
+  const productId = parseInt(resolvedParams.id);
 
   try {
     // In production, you might want to fetch this from your API
@@ -37,7 +39,14 @@ export async function generateMetadata({ params }: ProductPageProps) {
     // const product = await response.json();
 
     // For now, using mock data
-    const mockProducts: Record<number, any> = {
+    interface MockProduct {
+      name: string;
+      description: string;
+      price: number;
+      images: string[];
+    }
+
+    const mockProducts: Record<number, MockProduct> = {
       1: {
         name: "PS England Premium Jacket",
         description: "Discover our premium clothing collection featuring the latest trends in fashion.",

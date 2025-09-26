@@ -1,7 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  category: string;
+  image: string;
+  rating: number;
+  quantity?: number;
+}
+
+interface NavItem {
+  id: string;
+  label: string;
+  icon: string;
+}
 
 export default function CenterNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -9,17 +26,18 @@ export default function CenterNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<any[]>([]);
-  const [cartItems, setCartItems] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [cartItems, setCartItems] = useState<Product[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const router = useRouter();
 
-  const navItems = [
+  const navItems: NavItem[] = useMemo(() => [
     { id: "home", label: "Home", icon: "bx-home-alt" },
     { id: "collection", label: "Collections", icon: "bx-grid-alt" },
-    { id: "sellers", label: "Shop", icon: "bx-shopping-bag" },
+    { id: "shop", label: "Shop", icon: "bx-shopping-bag" },
     { id: "contact", label: "Contact", icon: "bx-message-dots" }
-  ];
+  ], []);
 
   // Product database for search
   const allProducts = [
@@ -78,11 +96,20 @@ export default function CenterNavbar() {
       });
       setActiveSection(sectionId);
       setIsMobileMenuOpen(false);
+      window.dispatchEvent(new Event('scroll'));
     }
   };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleNavClick = (id: string) => {
+    if (id === 'shop') {
+      router.push('/products');
+    } else {
+      scrollToSection(id);
+    }
   };
 
   // Search functionality
@@ -109,12 +136,12 @@ export default function CenterNavbar() {
   };
 
   // Cart functionality
-  const addToCart = (product: any) => {
+  const addToCart = (product: Product) => {
     const existingItem = cartItems.find(item => item.id === product.id);
     if (existingItem) {
       setCartItems(cartItems.map(item =>
         item.id === product.id
-          ? { ...item, quantity: item.quantity + 1 }
+          ? { ...item, quantity: (item.quantity || 0) + 1 }
           : item
       ));
     } else {
@@ -139,11 +166,11 @@ export default function CenterNavbar() {
   };
 
   const getTotalPrice = () => {
-    return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+    return cartItems.reduce((total, item) => total + (item.price * (item.quantity || 0)), 0);
   };
 
   const getTotalItems = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
+    return cartItems.reduce((total, item) => total + (item.quantity || 0), 0);
   };
 
   const toggleCart = () => {
@@ -195,7 +222,7 @@ export default function CenterNavbar() {
               <button
                 key={item.id}
                 className={`center-navbar__nav-item ${activeSection === item.id ? 'active' : ''}`}
-                onClick={() => scrollToSection(item.id)}
+                onClick={() => handleNavClick(item.id)}
                 style={{ '--item-index': index } as React.CSSProperties}
               >
                 <i className={`bx ${item.icon}`}></i>
@@ -240,7 +267,7 @@ export default function CenterNavbar() {
                       <div className="search-results-list">
                         {searchResults.slice(0, 6).map(product => (
                           <div key={product.id} className="search-result-item">
-                            <img src={product.image} alt={product.name} />
+                            <Image src={product.image} alt={product.name} width={50} height={50} />
                             <div className="search-result-info">
                               <h4>{product.name}</h4>
                               <span className="category">{product.category}</span>
@@ -262,7 +289,7 @@ export default function CenterNavbar() {
                       </div>
                       {searchResults.length > 6 && (
                         <div className="search-results-footer">
-                          <button onClick={() => scrollToSection('sellers')}>
+                          <button onClick={() => scrollToSection('shop')}>
                             View all {searchResults.length} results
                           </button>
                         </div>
@@ -273,7 +300,7 @@ export default function CenterNavbar() {
                   {searchQuery && searchResults.length === 0 && (
                     <div className="center-navbar__search-no-results">
                       <i className="bx bx-search-alt-2"></i>
-                      <p>No products found for "{searchQuery}"</p>
+                      <p>No products found for &ldquo;{searchQuery}&rdquo;</p>
                     </div>
                   )}
                 </div>
@@ -305,17 +332,17 @@ export default function CenterNavbar() {
                       <div className="cart-items">
                         {cartItems.map(item => (
                           <div key={item.id} className="cart-item">
-                            <img src={item.image} alt={item.name} />
+                            <Image src={item.image} alt={item.name} width={50} height={50} />
                             <div className="cart-item-info">
                               <h4>{item.name}</h4>
                               <span className="price">${item.price}</span>
                             </div>
                             <div className="cart-item-controls">
-                              <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>
+                              <button onClick={() => updateQuantity(item.id, (item.quantity || 0) - 1)}>
                                 <i className="bx bx-minus"></i>
                               </button>
-                              <span>{item.quantity}</span>
-                              <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>
+                              <span>{item.quantity || 0}</span>
+                              <button onClick={() => updateQuantity(item.id, (item.quantity || 0) + 1)}>
                                 <i className="bx bx-plus"></i>
                               </button>
                               <button

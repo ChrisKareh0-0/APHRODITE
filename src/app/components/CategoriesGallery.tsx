@@ -2,10 +2,29 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  images: string[];
+}
+
+interface Category {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  image: string;
+  color: string;
+  category: string;
+  products: Product[];
+}
 
 export default function CategoriesGallery() {
   const [activeCategory, setActiveCategory] = useState(0);
-  const [categories, setCategories] = useState<any[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const galleryRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -154,7 +173,7 @@ export default function CategoriesGallery() {
                     {category.products.map((product, pidx) => (
                       <div key={pidx} className="categories-gallery__product">
                         <div className="categories-gallery__product-image" onClick={() => handleProductClick(product.id)}>
-                          <img src={product.images[0]} alt={product.name} />
+                          <Image src={product.images[0]} alt={product.name} width={200} height={200} />
                           <div className="categories-gallery__product-overlay">
                             <button className="categories-gallery__product-btn">
                               <i className="bx bx-shopping-bag"></i>

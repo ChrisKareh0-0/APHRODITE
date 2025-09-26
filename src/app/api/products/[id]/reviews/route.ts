@@ -1,7 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Mock reviews database
-const reviewsDatabase: Record<number, any[]> = {
+interface Review {
+  id: number;
+  userId: number;
+  userName: string;
+  userAvatar: string;
+  rating: number;
+  comment: string;
+  date: string;
+  verified: boolean;
+  helpful: number;
+  images: string[];
+}
+
+const reviewsDatabase: Record<number, Review[]> = {
   1: [
     {
       id: 1,
@@ -84,10 +97,11 @@ const reviewsDatabase: Record<number, any[]> = {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const productId = parseInt(params.id);
+    const resolvedParams = await params;
+    const productId = parseInt(resolvedParams.id);
 
     if (isNaN(productId)) {
       return NextResponse.json(
@@ -170,10 +184,11 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const productId = parseInt(params.id);
+    const resolvedParams = await params;
+    const productId = parseInt(resolvedParams.id);
     const body = await request.json();
 
     if (isNaN(productId)) {

@@ -187,7 +187,7 @@ export default function CategoryCarousel() {
                 </div>
                 <div className="content__right">
                   <div className="content__main">
-                    <p>"Discover our exquisite clothing collection featuring elegant dresses, sophisticated blazers, and timeless pieces. Each garment is carefully curated to embody the essence of modern femininity and classic style that defines the Aphrodite brand."</p>
+                    <p>&ldquo;Discover our exquisite clothing collection featuring elegant dresses, sophisticated blazers, and timeless pieces. Each garment is carefully curated to embody the essence of modern femininity and classic style that defines the Aphrodite brand.&rdquo;</p>
                     <p>– APHRODITE COLLECTION</p>
                   </div>
                   <h3 className="content__index">01</h3>
@@ -203,7 +203,7 @@ export default function CategoryCarousel() {
                 </div>
                 <div className="content__right">
                   <div className="content__main">
-                    <p>"Step into elegance with our premium footwear collection. From comfortable everyday sneakers to stunning heels for special occasions, our shoes combine comfort with style, ensuring you feel confident with every step you take."</p>
+                    <p>&ldquo;Step into elegance with our premium footwear collection. From comfortable everyday sneakers to stunning heels for special occasions, our shoes combine comfort with style, ensuring you feel confident with every step you take.&rdquo;</p>
                     <p>– APHRODITE FOOTWEAR</p>
                   </div>
                   <h3 className="content__index">02</h3>
@@ -219,7 +219,7 @@ export default function CategoryCarousel() {
                 </div>
                 <div className="content__right">
                   <div className="content__main">
-                    <p>"Complete your look with our luxury accessories collection. From designer handbags and elegant jewelry to stylish sunglasses and scarves, each piece is selected to add the perfect finishing touch to your ensemble."</p>
+                    <p>&ldquo;Complete your look with our luxury accessories collection. From designer handbags and elegant jewelry to stylish sunglasses and scarves, each piece is selected to add the perfect finishing touch to your ensemble.&rdquo;</p>
                     <p>– APHRODITE ACCESSORIES</p>
                   </div>
                   <h3 className="content__index">03</h3>
@@ -235,7 +235,7 @@ export default function CategoryCarousel() {
                 </div>
                 <div className="content__right">
                   <div className="content__main">
-                    <p>"Don't miss our exclusive sale collection featuring premium items at unbeatable prices. Limited time offers on selected clothing, shoes, and accessories. Discover luxury for less and refresh your wardrobe with timeless pieces."</p>
+                    <p>&ldquo;Don&apos;t miss our exclusive sale collection featuring premium items at unbeatable prices. Limited time offers on selected clothing, shoes, and accessories. Discover luxury for less and refresh your wardrobe with timeless pieces.&rdquo;</p>
                     <p>– SPECIAL OFFERS</p>
                   </div>
                   <h3 className="content__index">04</h3>

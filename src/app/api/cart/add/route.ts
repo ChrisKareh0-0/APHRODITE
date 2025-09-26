@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Mock cart storage (in production, use database with user sessions)
-let cartStorage: Record<string, any[]> = {};
+const cartStorage: Record<string, CartItem[]> = {};
 
 // Mock products for validation
 const products = [
@@ -129,7 +129,19 @@ export async function POST(request: NextRequest) {
   }
 }
 
-function calculateCartTotal(cart: any[]) {
+interface CartItem {
+  id: number;
+  productId: number;
+  productName: string;
+  price: number;
+  quantity: number;
+  color?: string | null;
+  size?: string | null;
+  addedAt: string;
+  updatedAt: string;
+}
+
+function calculateCartTotal(cart: CartItem[]) {
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 

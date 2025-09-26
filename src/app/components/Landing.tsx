@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect } from "react";
+import Image from "next/image";
 import InteractiveDots from "./InteractiveDots";
-import ProductCarousel from "./ProductCarousel";
 import CategoriesGallery from "./CategoriesGallery";
 import CenterNavbar from "./CenterNavbar";
-import Navigation from "../../components/Navigation";
 import "../carousel.css";
 import "../categories-gallery.css";
 import "../center-navbar.css";
 import "../product-details.css";
+import HorizontalProductCarousel from "./HorizontalProductCarousel";
+import "../horizontal-carousel.css";
 
 export default function Landing() {
   useEffect(() => {
@@ -19,8 +20,6 @@ export default function Landing() {
       const hash = target.hash;
       const el = document.querySelector(hash);
       if (!el) return;
-      event.preventDefault();
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
       history.pushState(null, "", hash);
       const checkbox = document.getElementById("checkbox") as HTMLInputElement | null;
       if (checkbox) checkbox.checked = false;
@@ -34,11 +33,12 @@ export default function Landing() {
     <>
       {/* Center Navigation */}
       <CenterNavbar />
-      <InteractiveDots />
-      <section id="home">
+      <main className="main-content">
+        <InteractiveDots />
+        <section id="home">
         <div className="home_page ">
           <div className="home_img ">
-            <img src="https://i.postimg.cc/t403yfn9/home2.jpg" alt="img " />
+            <Image src="https://i.postimg.cc/t403yfn9/home2.jpg" alt="home image" width={600} height={400} />
           </div>
           <div className="home_txt ">
             <p className="collectio ">SUMMER COLLECTION</p>
@@ -65,6 +65,14 @@ export default function Landing() {
 
       <section id="collection">
         <CategoriesGallery />
+      </section>
+
+      <section id="on-sale">
+        <HorizontalProductCarousel title="On Sale" query="isOnSale=true&limit=10" />
+      </section>
+
+      <section id="whats-new">
+        <HorizontalProductCarousel title="What's New" query="sortBy=createdAt&limit=10" />
       </section>
       {/* <section id="sellers">
         <div className="seller container">
@@ -587,8 +595,7 @@ export default function Landing() {
           </div>
         </div>
       </footer>
+    </main>
     </>
   );
 }
-
-

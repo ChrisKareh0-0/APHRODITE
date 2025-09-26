@@ -11,6 +11,7 @@ interface NavbarMenuItemProps {
   active?: string | null;
   className?: string;
   isActive?: boolean;
+  onMouseEnter?: () => void;
 }
 
 interface NavbarMenuProps {

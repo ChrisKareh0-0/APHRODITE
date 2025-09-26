@@ -111,7 +111,24 @@ const products = [
   }
 ];
 
-function calculateSimilarityScore(product1: any, product2: any): number {
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  originalPrice?: number;
+  category: string;
+  brand: string;
+  rating: number;
+  reviewCount: number;
+  images: string[];
+  tags: string[];
+  colors: string[];
+  sizes: string[];
+  inStock: boolean;
+  stockCount: number;
+}
+
+function calculateSimilarityScore(product1: Product, product2: Product): number {
   let score = 0;
 
   // Same category gets high score
@@ -146,10 +163,11 @@ function calculateSimilarityScore(product1: any, product2: any): number {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const productId = parseInt(params.id);
+    const resolvedParams = await params;
+    const productId = parseInt(resolvedParams.id);
 
     if (isNaN(productId)) {
       return NextResponse.json(

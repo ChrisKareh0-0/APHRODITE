@@ -1,7 +1,31 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  originalPrice?: number;
+  images: string[];
+  rating: number;
+  reviewCount: number;
+  category: string;
+}
+
+interface Category {
+  id: number;
+  name: string;
+  continent: string;
+  description: string;
+  author: string;
+  bgColor: string;
+  type: string;
+  category: string;
+  bestSellers: Product[];
+}
 
 export default function ProductCarousel() {
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -12,8 +36,10 @@ export default function ProductCarousel() {
   const controlsRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  const [productCategories, setProductCategories] = useState<any[]>([]);
+  const [productCategories, setProductCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  // Remove unused variable
+  // const [activeEls, setActiveEls] = useState([]);
 
   const SPIN_FORWARD_CLASS = 'js-spin-fwd';
   const SPIN_BACKWARD_CLASS = 'js-spin-bwd';
@@ -85,9 +111,9 @@ export default function ProductCarousel() {
           type: "clothing",
           category: "Clothing",
           bestSellers: [
-            { id: 1, name: "PS England Jacket", price: 17.24, rating: 4, images: ["https://i.postimg.cc/76X9ZV8m/Screenshot_from_2022-06-03_18-45-12.png"] },
-            { id: 2, name: "PS England Shirt", price: 27.24, rating: 5, images: ["https://i.postimg.cc/j2FhzSjf/bs2.png"] },
-            { id: 3, name: "PS England T-Shirt", price: 10.23, rating: 5, images: ["https://i.postimg.cc/fbnB2yfj/na1.png"] }
+            { id: 1, name: "PS England Jacket", price: 17.24, rating: 4, images: ["https://i.postimg.cc/76X9ZV8m/Screenshot_from_2022-06-03_18-45-12.png"], reviewCount: 100, category: "Clothing" },
+            { id: 2, name: "PS England Shirt", price: 27.24, rating: 5, images: ["https://i.postimg.cc/j2FhzSjf/bs2.png"], reviewCount: 85, category: "Clothing" },
+            { id: 3, name: "PS England T-Shirt", price: 10.23, rating: 5, images: ["https://i.postimg.cc/fbnB2yfj/na1.png"], reviewCount: 156, category: "Clothing" }
           ]
         }
       ];
@@ -198,7 +224,7 @@ export default function ProductCarousel() {
     }, 100);
   };
 
-  const attachListeners = () => {
+  const attachListeners = useCallback(() => {
     const handleKeyUp = (e: KeyboardEvent) => {
       switch (e.keyCode) {
         case 38:
@@ -234,7 +260,7 @@ export default function ProductCarousel() {
         });
       }
     };
-  };
+  }, []);
 
   useEffect(() => {
     const init = () => {
@@ -290,7 +316,7 @@ export default function ProductCarousel() {
                 </div>
                 <div className="content__right">
                   <div className="content__main">
-                    <p>"{category.description}"</p>
+                    <p>&ldquo;{category.description}&rdquo;</p>
                     <p>– {category.author}</p>
                   </div>
                   <h3 className="content__index">{String(index + 1).padStart(2, '0')}</h3>
@@ -314,9 +340,9 @@ export default function ProductCarousel() {
                   <div className="content__main">
                     <h3 style={{color: '#fff', marginBottom: '2rem'}}>Best Sellers</h3>
                     <div className="best-sellers-grid">
-                      {category.bestSellers.map((product: any, pidx: number) => (
+                      {category.bestSellers.map((product: Product, pidx: number) => (
                         <div key={pidx} className="product-item" onClick={() => handleProductClick(product.id)}>
-                          <img src={product.images ? product.images[0] : product.image} alt={product.name} />
+                          <Image src={product.images ? product.images[0] : (product as Product & { image: string }).image} alt={product.name} width={100} height={100} />
                           <div className="product-info">
                             <p className="product-name">{product.name}</p>
                             <div className="rating">
@@ -338,10 +364,10 @@ export default function ProductCarousel() {
 
       {/* Preloader */}
       <div style={{height: 0, width: 0, overflow: 'hidden'}}>
-        <img src="https://i.postimg.cc/8CmBZH5N/shoes.webp" alt="" />
-        <img src="https://i.postimg.cc/Xqmwr12c/clothing.webp" alt="" />
-        <img src="https://i.postimg.cc/MHv7KJYp/access.webp" alt="" />
-        <img src="https://i.postimg.cc/76X9ZV8m/Screenshot_from_2022-06-03_18-45-12.png" alt="" />
+        <Image src="https://i.postimg.cc/8CmBZH5N/shoes.webp" alt="" width={1} height={1} />
+        <Image src="https://i.postimg.cc/Xqmwr12c/clothing.webp" alt="" width={1} height={1} />
+        <Image src="https://i.postimg.cc/MHv7KJYp/access.webp" alt="" width={1} height={1} />
+        <Image src="https://i.postimg.cc/76X9ZV8m/Screenshot_from_2022-06-03_18-45-12.png" alt="" width={1} height={1} />
       </div>
     </div>
   );

@@ -39,12 +39,12 @@ const upload = multer({
 // @desc    Get all products with pagination and filters
 // @access  Private
 router.get('/', [
-  adminAuth,
   query('page').optional().isInt({ min: 1 }),
   query('limit').optional().isInt({ min: 1, max: 100 }),
   query('category').optional().isMongoId(),
   query('search').optional().trim(),
-  query('status').optional().isIn(['active', 'inactive', 'all'])
+  query('status').optional().isIn(['active', 'inactive', 'all']),
+  query('isOnSale').optional().isBoolean()
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -61,6 +61,10 @@ router.get('/', [
 
     if (req.query.category) {
       filter.category = req.query.category;
+    }
+
+    if (req.query.isOnSale) {
+      filter.isOnSale = req.query.isOnSale === 'true';
     }
 
     if (req.query.status && req.query.status !== 'all') {

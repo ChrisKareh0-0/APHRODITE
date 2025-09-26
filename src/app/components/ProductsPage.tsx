@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import CenterNavbar from "./CenterNavbar";
 
 interface Product {
@@ -47,8 +48,8 @@ export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [pagination, setPagination] = useState<any>(null);
-  const [filters, setFilters] = useState<any>(null);
+  const [pagination, setPagination] = useState<ProductsResponse['pagination'] | null>(null);
+  const [filters, setFilters] = useState<ProductsResponse['filters'] | null>(null);
 
   // Filter states
   const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '');
@@ -64,7 +65,7 @@ export default function ProductsPage() {
     fetchProducts();
   }, [currentPage, selectedCategory, selectedBrand, searchQuery, sortBy, minPrice, maxPrice]);
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       setLoading(true);
 
@@ -100,7 +101,7 @@ export default function ProductsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, selectedCategory, selectedBrand, searchQuery, sortBy, minPrice, maxPrice]);
 
   const handleProductClick = (productId: number) => {
     router.push(`/product/${productId}`);
@@ -316,7 +317,7 @@ export default function ProductsPage() {
                     )}
                     {searchQuery && (
                       <span className="active-filter">
-                        Search: "{searchQuery}"
+                        Search: &ldquo;{searchQuery}&rdquo;
                         <button onClick={() => handleSearch('')}>×</button>
                       </span>
                     )}
@@ -352,7 +353,7 @@ export default function ProductsPage() {
                       onClick={() => handleProductClick(product.id)}
                     >
                       <div className="product-image">
-                        <img src={product.images[0]} alt={product.name} />
+                        <Image src={product.images[0]} alt={product.name} width={300} height={300} />
                         {product.discount > 0 && (
                           <span className="discount-badge">-{product.discount}%</span>
                         )}

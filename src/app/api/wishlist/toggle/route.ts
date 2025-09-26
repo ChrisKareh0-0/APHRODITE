@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Mock wishlist storage (in production, use database with user sessions)
-let wishlistStorage: Record<string, number[]> = {};
+const wishlistStorage: Record<string, number[]> = {};
 
 // Mock products for validation
 const products = [

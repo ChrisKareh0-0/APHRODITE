@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import CenterNavbar from "./CenterNavbar";
 
 interface Product {
@@ -306,7 +308,7 @@ export default function ProductDetailsPage({ productId }: ProductDetailsPageProp
         <div className="error-message">
           <i className="bx bx-error"></i>
           <h2>Product Not Found</h2>
-          <p>Sorry, we couldn't find the product you're looking for.</p>
+          <p>Sorry, we couldn&apos;t find the product you&apos;re looking for.</p>
           <button onClick={() => window.history.back()}>Go Back</button>
         </div>
       </div>
@@ -316,14 +318,15 @@ export default function ProductDetailsPage({ productId }: ProductDetailsPageProp
   return (
     <>
       <CenterNavbar />
-      <div className="product-details-page">
+      <div className="main-content">
+        <div className="product-details-page">
         <div className="product-details-container">
 
           {/* Breadcrumb */}
           <div className="breadcrumb">
-            <a href="/">Home</a>
+            <Link href="/">Home</Link>
             <i className="bx bx-chevron-right"></i>
-            <a href="/shop">{product.category}</a>
+            <Link href="/shop">{product.category}</Link>
             <i className="bx bx-chevron-right"></i>
             <span>{product.name}</span>
           </div>
@@ -334,7 +337,7 @@ export default function ProductDetailsPage({ productId }: ProductDetailsPageProp
             {/* Image Gallery */}
             <div className="product-gallery">
               <div className="main-image">
-                <img src={product.images[selectedImage]} alt={product.name} />
+                <Image src={product.images[selectedImage]} alt={product.name} width={500} height={500} />
                 <button
                   className={`wishlist-btn ${isWishlisted ? 'active' : ''}`}
                   onClick={toggleWishlist}
@@ -349,7 +352,7 @@ export default function ProductDetailsPage({ productId }: ProductDetailsPageProp
                     className={`thumbnail ${selectedImage === index ? 'active' : ''}`}
                     onClick={() => setSelectedImage(index)}
                   >
-                    <img src={image} alt={`${product.name} ${index + 1}`} />
+                    <Image src={image} alt={`${product.name} ${index + 1}`} width={100} height={100} />
                   </button>
                 ))}
               </div>
@@ -586,13 +589,13 @@ export default function ProductDetailsPage({ productId }: ProductDetailsPageProp
                 {relatedProducts.map((relatedProduct) => (
                   <div key={relatedProduct.id} className="related-product-item">
                     <div className="product-image">
-                      <img src={relatedProduct.images[0]} alt={relatedProduct.name} />
+                      <Image src={relatedProduct.images[0]} alt={relatedProduct.name} width={200} height={200} />
                     </div>
                     <div className="product-info">
                       <h3>{relatedProduct.name}</h3>
                       <div className="rating">
                         {renderStars(relatedProduct.rating)}
-                        <span>({relatedProduct.reviewCount})</span>
+                        <span>({relatedProduct.reviewCount || 0})</span>
                       </div>
                       <div className="price">${relatedProduct.price}</div>
                       <button className="quick-add-btn">
@@ -605,7 +608,7 @@ export default function ProductDetailsPage({ productId }: ProductDetailsPageProp
               </div>
             </div>
           )}
-
+        </div>
         </div>
       </div>
     </>

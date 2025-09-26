@@ -37,7 +37,7 @@ const upload = multer({
 // @route   GET /api/categories
 // @desc    Get all categories
 // @access  Private
-router.get('/', adminAuth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const categories = await Category.find()
       .populate('createdBy', 'name email')
