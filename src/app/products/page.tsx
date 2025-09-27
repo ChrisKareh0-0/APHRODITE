@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import ProductsPage from "../components/ProductsPage";
 import "../products-page.css";
 import "../center-navbar.css";
@@ -13,6 +14,21 @@ export const metadata = {
   }
 };
 
+function ProductsLoading() {
+  return (
+    <div className="products-loading-page">
+      <div className="loading-spinner">
+        <div className="spinner"></div>
+        <p>Loading products...</p>
+      </div>
+    </div>
+  );
+}
+
 export default function Products() {
-  return <ProductsPage />;
+  return (
+    <Suspense fallback={<ProductsLoading />}>
+      <ProductsPage />
+    </Suspense>
+  );
 }
