@@ -513,10 +513,10 @@ export default function Landing() {
               <div className="form-txt">
                 <h4>INFORMATION</h4>
                 <h1>Contact Us</h1>
-                <span>
+                {/* <span>
                   As you might expect of a company that began as a high-end
                   interiors contractor, we pay strict attention.
-                </span>
+                </span> */}
                 <h3></h3>
                 <p>
                  
@@ -546,14 +546,14 @@ export default function Landing() {
       <footer>
         <div className="footer-container container">
           <div className="content_1">
-            <img src="https://i.postimg.cc/htGyQ4JB/footer-logo.png" alt="logo" />
-            <p>
+            {/* <img src="https://i.postimg.cc/htGyQ4JB/footer-logo.png" alt="logo" /> */}
+            {/* <p>
               The customer is at the heart of our
               <br />
               unique business model, which includes
               <br />
               design.
-            </p>
+            </p> */}
             {/* <img src="https://i.postimg.cc/Nj9dgJ98/cards.png" alt="cards" /> */}
           </div>
           <div className="content_2">

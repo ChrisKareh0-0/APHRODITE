@@ -465,7 +465,7 @@ export default function CenterNavbar() {
               <button
                 key={`mobile-${item.id}`}
                 className={`center-navbar__mobile-nav-item ${activeSection === item.id ? 'active' : ''}`}
-                onClick={() => scrollToSection(item.id)}
+                onClick={() => handleNavClick(item.id)}
               >
                 <i className={`bx ${item.icon}`}></i>
                 <span>{item.label}</span>
