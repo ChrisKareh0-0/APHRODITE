@@ -436,8 +436,30 @@ export default function CenterNavbar() {
 
         </div>
 
+        {/* Mobile Menu Overlay */}
+        {isMobileMenuOpen && (
+          <div
+            className="center-navbar__mobile-overlay"
+            onClick={toggleMobileMenu}
+          />
+        )}
+
         {/* Mobile Menu */}
         <div className={`center-navbar__mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
+          {/* Mobile Menu Header with Close Button */}
+          <div className="center-navbar__mobile-header">
+            <div className="center-navbar__mobile-logo">
+              {/* <h3>APHRODITE</h3> */}
+            </div>
+            <button
+              className="center-navbar__mobile-close"
+              onClick={toggleMobileMenu}
+              aria-label="Close menu"
+            >
+              {/* <i className="bx bx-x"></i> */}
+            </button>
+          </div>
+
           <div className="center-navbar__mobile-nav">
             {navItems.map((item) => (
               <button

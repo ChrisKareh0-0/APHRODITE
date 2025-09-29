@@ -1,7 +1,7 @@
 /* Center Navbar Styles */
 .center-navbar {
   position: fixed;
-  top: 0;
+  top: 50;
   left: 0;
   right: 0;
   z-index: 100;
@@ -11,8 +11,8 @@
 }
 
 .center-navbar.scrolled {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.1);
+  /* background: rgba(255, 255, 255, 0.95); */
+  /* box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.1); */
 }
 
 .center-navbar__container {
@@ -20,7 +20,7 @@
   margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 1rem 2rem;
   position: relative;
 }
@@ -28,7 +28,8 @@
 /* Logo */
 .center-navbar__logo {
   z-index: 10;
-  flex: 1;
+  position: absolute;
+  left: 2rem;
 }
 
 .center-navbar__logo h2 {
@@ -43,9 +44,11 @@
 
 /* Desktop Navigation */
 .center-navbar__nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 0.5rem;
   background: white;
   padding: 0.75rem;
@@ -54,7 +57,6 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   opacity: 0;
   animation: fadeInUp 0.8s ease-out 0.3s forwards;
-  flex: 2;
 }
 
 .center-navbar__nav-item {
@@ -160,8 +162,8 @@
   align-items: center;
   gap: 0.5rem;
   z-index: 10;
-  flex: 1;
-  justify-content: flex-end;
+  position: absolute;
+  right: 2rem;
 }
 
 .center-navbar__action-btn {
@@ -392,8 +394,8 @@
 }
 
 .center-navbar__backdrop.active {
-  opacity: 1;
-  visibility: visible;
+  opacity: 0; /* keep page clickable */
+  visibility: hidden;
 }
 
 /* Spacer */
@@ -466,11 +468,21 @@
   }
 
   .center-navbar__actions {
+    display: flex;
+    right: 4.25rem;
+  }
+
+  .center-navbar__search-container,
+  .center-navbar__profile-container {
     display: none;
   }
 
   .center-navbar__mobile-toggle {
     display: flex;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .center-navbar__spacer {
@@ -482,13 +494,45 @@
   }
 }
 
+@media (min-width: 769px) {
+  /* Use grid on desktop to guarantee perfect centering regardless of side elements */
+  .center-navbar__container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+  }
+
+  .center-navbar__logo {
+    position: static;
+    justify-self: start;
+  }
+
+  .center-navbar__nav {
+    position: static;
+    transform: none;
+    left: auto;
+    right: auto;
+    justify-self: center;
+  }
+
+  .center-navbar__actions {
+    position: static;
+    justify-self: end;
+  }
+}
+
 @media (max-width: 480px) {
   .center-navbar__container {
     padding: 0.75rem;
   }
 
   .center-navbar__mobile-menu {
-    padding: 1.5rem;
+    left: auto;
+    right: 1rem;
+    top: calc(100% + 10px);
+    width: 280px;
+    border-radius: 16px;
+    padding: 1rem;
   }
 }
 

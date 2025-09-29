@@ -450,6 +450,18 @@
 }
 
 @media (max-width: 768px) {
+  /* Ensure Collections section isn't constrained on mobile and has breathing room */
+  #collection {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    padding-bottom: calc(280px + env(safe-area-inset-bottom, 0px)); /* extra space at bottom incl. notches */
+  }
+
+  .categories-gallery {
+    min-height: 0;
+  }
+
   .categories-gallery__container {
     padding: 0 1rem;
   }
@@ -477,6 +489,14 @@
 
   .categories-gallery__hero {
     height: 400px;
+  }
+
+  .categories-gallery__hero {
+    display: none;
+  }
+
+  .categories-gallery__hero-overlay {
+    display: none;
   }
 
   .categories-gallery__hero-content h2 {

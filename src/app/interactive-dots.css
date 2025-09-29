@@ -84,15 +84,17 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  /* Increase base font-size to make each dot larger, which reduces total dots */
-  .section-resource { padding: 1.5em; font-size: 4vw; height: 35vh; }
-  .aphrodite-text { font-size: 2.5em; }
+  /* Hide entire section on mobile to push content up */
+  .section-resource {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
-  /* Further increase dot size and reduce height for small phones */
-  .section-resource { padding: 1em; font-size: 5vw; height: 30vh; }
-  .aphrodite-text { font-size: 1em; letter-spacing: 0.05em; }
+  /* Hide entire section on small phones too */
+  .section-resource {
+    display: none;
+  }
 }
 
 

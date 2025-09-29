@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Oswald, Merriweather } from "next/font/google";
 import "./globals.css";
 import "./landing.css";
+import GlobalLoadingOverlay from "./components/GlobalLoadingOverlay";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable} ${merriweather.variable} antialiased`}
       >
+        <GlobalLoadingOverlay />
         {children}
       </body>
     </html>

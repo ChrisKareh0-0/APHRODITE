@@ -3,7 +3,6 @@
 import { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import CenterNavbar from "./CenterNavbar";
 
 interface Product {
   id: number;
@@ -291,11 +290,12 @@ export default function ProductDetailsPage({ productId }: ProductDetailsPageProp
 
   if (loading) {
     return (
-      <div className="product-details-loading">
-        <CenterNavbar />
-        <div className="loading-spinner">
-          <div className="spinner"></div>
-          <p>Loading product details...</p>
+      <div className="aph-pdp">
+        <div className="product-details-loading">
+          <div className="loading-spinner">
+            <div className="spinner"></div>
+            <p>Loading product details...</p>
+          </div>
         </div>
       </div>
     );
@@ -303,13 +303,14 @@ export default function ProductDetailsPage({ productId }: ProductDetailsPageProp
 
   if (error || !product) {
     return (
-      <div className="product-details-error">
-        <CenterNavbar />
-        <div className="error-message">
-          <i className="bx bx-error"></i>
-          <h2>Product Not Found</h2>
-          <p>Sorry, we couldn&apos;t find the product you&apos;re looking for.</p>
-          <button onClick={() => window.history.back()}>Go Back</button>
+      <div className="aph-pdp">
+        <div className="product-details-error">
+          <div className="error-message">
+            <i className="bx bx-error"></i>
+            <h2>Product Not Found</h2>
+            <p>Sorry, we couldn&apos;t find the product you&apos;re looking for.</p>
+            <button onClick={() => window.history.back()}>Go Back</button>
+          </div>
         </div>
       </div>
     );
@@ -317,12 +318,12 @@ export default function ProductDetailsPage({ productId }: ProductDetailsPageProp
 
   return (
     <>
-      <CenterNavbar />
-      <div className="main-content">
+      <div className="aph-pdp">
         <div className="product-details-page">
         <div className="product-details-container">
 
-          {/* Breadcrumb */}
+          {/* Back + Breadcrumb */}
+          <div className="back-row"><Link href="/" className="back-link"><i className="bx bx-left-arrow-alt"></i> Back</Link></div>
           <div className="breadcrumb">
             <Link href="/">Home</Link>
             <i className="bx bx-chevron-right"></i>
@@ -608,7 +609,7 @@ export default function ProductDetailsPage({ productId }: ProductDetailsPageProp
               </div>
             </div>
           )}
-        </div>
+          </div>
         </div>
       </div>
     </>

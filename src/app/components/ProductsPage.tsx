@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import CenterNavbar from "./CenterNavbar";
+import Link from "next/link";
 
 interface Product {
   id: number;
@@ -150,8 +150,7 @@ export default function ProductsPage() {
 
   if (error) {
     return (
-      <>
-        <CenterNavbar />
+      <div className="aph-list">
         <div className="products-error">
           <div className="error-content">
             <i className="bx bx-error-circle"></i>
@@ -163,15 +162,16 @@ export default function ProductsPage() {
             </button>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 
   return (
     <>
-      <CenterNavbar />
-      <div className="products-page-centered">
+      <div className="aph-list">
+        <div className="products-page-centered">
         <div className="products-main-container">
+          <div className="back-row"><Link href="/" className="back-link"><i className="bx bx-left-arrow-alt"></i> Back</Link></div>
 
           {/* Page Header */}
           <div className="products-page-header">
@@ -445,7 +445,7 @@ export default function ProductsPage() {
 
             </div>
           </div>
-
+        </div>
         </div>
       </div>
     </>

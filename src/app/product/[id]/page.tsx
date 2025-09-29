@@ -1,6 +1,5 @@
 import ProductDetailsPage from "../../components/ProductDetailsPage";
 import "../../product-details.css";
-import "../../center-navbar.css";
 
 interface ProductPageProps {
   params: Promise<{
