@@ -10,10 +10,7 @@
   -webkit-backdrop-filter: blur(10px);
 }
 
-.center-navbar.scrolled {
-  /* background: rgba(255, 255, 255, 0.95); */
-  /* box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.1); */
-}
+
 
 .center-navbar__container {
   max-width: 1200px;
@@ -463,6 +460,16 @@
     padding: 1rem;
   }
 
+  /* Mobile: when scrolled, apply white glassy background */
+  .center-navbar.scrolled {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem 0; /* increase white background height */
+    top: 0
+  }
+
   .center-navbar__nav {
     display: none;
   }
@@ -486,7 +493,7 @@
   }
 
   .center-navbar__spacer {
-    height: 70px;
+    height: 90px; /* match increased navbar height */
   }
 
   .center-navbar__logo h2 {
